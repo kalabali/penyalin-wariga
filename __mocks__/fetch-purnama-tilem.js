@@ -3,7 +3,7 @@ const html = `\r\n
 
 const htmlFetch = url => {
     return new Promise((resolve, reject) => {    
-        console.log("from mock")    
+        // console.log("from mock custom")    
        resolve(html);
     })
 }
