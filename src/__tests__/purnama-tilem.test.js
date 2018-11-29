@@ -39,7 +39,7 @@ it('Getting purnama tilem on november 2018', () => {
     expect.assertions(1);
     return purnamaTilem(11, 2018)
         .then(data => {
-            console.log({datas: data})
+            // console.log({datas: data})
             expect(data).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({

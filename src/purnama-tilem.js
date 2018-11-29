@@ -1,8 +1,8 @@
 const cheerio = require('cheerio');
 const htmlFetch = require('./html-fetch');
-const utils = require('./utils');
+const utils = require('./helpers/utils');
 
-const purnamaTilem = async (month, year) => {        
+const purnamaTilem = async ( month, year ) => {        
     try {
         const targetedMonth = utils.getFullMonth(month);
         if(!targetedMonth){
