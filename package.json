@@ -1,13 +1,13 @@
 {
   "name": "tdd-scrapper",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose"
   },
   "keywords": [],
-  "author": "",
+  "author": "imdbsd",
   "license": "ISC",
   "devDependencies": {
     "jest": "^23.6.0"
