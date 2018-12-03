@@ -56,6 +56,44 @@ const validateDate = ({ year, month, date }) => {
     return err;
 }
 
+const monthChecker = month => {
+    if(typeof(month) !== 'number'){
+        throw new Error('month expect as a number!');
+    }
+    if(month < 0 || month > 11){
+        throw new Error('month expect from 0 to 11!');
+    }
+    return true;
+}
+
+const checkObject = (obj, keys) => {
+    if(typeof(obj) !== 'object'){
+        throw new Error('expected object as options!');
+    }
+    keys.forEach(key => {
+        if(!obj[key]){
+            throw new Error(`expected properties ${key} passed in options`);
+        }
+    })
+    return true;
+}
+
+const yearChecker = year => {
+    if(typeof(year) !== 'number'){
+        throw new Error('year expect as a number!');
+    }
+    if(year % 1 !== 0){
+        throw new Error('year expect as a non floating number!');
+    }
+    if(year < 0){
+        throw new Error('year expect as a non negatif number!');
+    }
+    return true;
+}
+
 module.exports = {
-    validateDate
+    validateDate,
+    monthChecker,
+    checkObject,
+    yearChecker
 }

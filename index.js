@@ -10,11 +10,17 @@ const kalenderBali = {
 // .then(data => console.log({data}))
 // .catch(err => console.log({erre: err }))
 
-kalenderBali.purnamaTilem(11, 2018)
+kalenderBali.purnamaTilem({
+    month: 11,
+    year: 2018
+})
     .then(data => console.log({ data }))
     .catch(err => console.log({ err }))
 
-kalenderBali.wuku(11, 2018)
+kalenderBali.wuku({
+    month: 11,
+    year: 2018
+})
     .then(data => console.log({ data }))
     .catch(err => console.log({ err }))
 

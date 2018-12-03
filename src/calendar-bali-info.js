@@ -1,9 +1,16 @@
 const cheerio = require('cheerio');
 const htmlFetch = require('./html-fetch');
 const utils = require('./helpers/utils');
+const { monthChecker, checkObject, yearChecker } = require('./helpers/validators');
 
-const rerainan = async ({ month, year }) => {
+const calendarBaliInfo = async (options) => {    
     try {
+        checkObject(options, ['month', 'year']);
+        const { month, year } = options;
+
+        monthChecker(month);
+        yearChecker(year);
+        
         const html = await htmlFetch(`http://kalenderbali.info/?month=${month}&year=${year}`);
         const $ = cheerio.load(html);
 
@@ -64,8 +71,13 @@ const rerainan = async ({ month, year }) => {
     }
 }
 
-rerainan({ month: 12, year: 2018 })
-    .then(result => console.log({result}))
+calendarBaliInfo({year: 2018.5 })
+    .then(result => {
+        console.log(result)
+        const { rerainanDay, memorialDay } = result;
+        rerainanDay.forEach(d => console.log(d));
+        memorialDay.forEach(d => console.log(d));
+    })
 
-module.exports = rerainan;
+module.exports = calendarBaliInfo;
 
