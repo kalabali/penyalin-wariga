@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
-const htmlFetch = require('./html-fetch');
-const utils = require('./helpers/utils');
+const htmlFetch = require('../helpers/html-fetch');
+const utils = require('../helpers/utils');
 
 const wuku = async ({ month, year }) => {    
     try {

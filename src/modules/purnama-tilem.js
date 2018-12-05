@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
-const htmlFetch = require('./html-fetch');
-const utils = require('./helpers/utils');
+const htmlFetch = require('../helpers/html-fetch');
+const utils = require('../helpers/utils');
 
 const purnamaTilem = async ({ month, year }) => {        
     try {
@@ -41,5 +41,10 @@ const purnamaTilem = async ({ month, year }) => {
         throw new Error(err);
     }
 }
+
+// purnamaTilem({
+//     month: 11, 
+//     year: 2018
+// }).then(result => console.log(result))
 
 module.exports = purnamaTilem;

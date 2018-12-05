@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
-const htmlFetch = require('./html-fetch');
-const utils = require('./helpers/utils');
-const { monthChecker, checkObject, yearChecker } = require('./helpers/validators');
+const htmlFetch = require('../helpers/html-fetch');
+const utils = require('../helpers/utils');
+const { monthChecker, checkObject, yearChecker } = require('../helpers/validators');
 
 const calendarBaliInfo = async (options) => {    
     try {
@@ -11,7 +11,7 @@ const calendarBaliInfo = async (options) => {
         monthChecker(month);
         yearChecker(year);
         
-        const html = await htmlFetch(`http://kalenderbali.info/?month=${month}&year=${year}`);
+        const html = await htmlFetch(`http://kalenderbali.info/?month=${month}&year=${year}`);        
         const $ = cheerio.load(html);
 
         let rerainanCol = $("#right-column-1 .box table tbody").html();
@@ -34,8 +34,8 @@ const calendarBaliInfo = async (options) => {
                 let event = e.split(",");
                 storedR.events.push({
                     type: "rerainan",
-                    event_name: event[0],
-                    information: (event[1] !== undefined) ? event[1] : ""
+                    event_name: event[0].trim(),
+                    information: (event[1] !== undefined) ? event[1].trim() : ""
                 })
             })
             rerainanDay.push(storedR);
@@ -54,8 +54,8 @@ const calendarBaliInfo = async (options) => {
                 let event = e.split(",");
                 storedP.events.push({
                     type: "hari-peringatan",
-                    event_name: event[0],
-                    information: (event[1] !== undefined) ? event[1] : ""
+                    event_name: event[0].trim(),
+                    information: (event[1] !== undefined) ? event[1].trim() : ""
                 })
             })
             memorialDay.push(storedP);
@@ -71,13 +71,8 @@ const calendarBaliInfo = async (options) => {
     }
 }
 
-calendarBaliInfo({year: 2018.5 })
-    .then(result => {
-        console.log(result)
-        const { rerainanDay, memorialDay } = result;
-        rerainanDay.forEach(d => console.log(d));
-        memorialDay.forEach(d => console.log(d));
-    })
+// calendarBaliInfo({year: 2018, month: 11 })
+//     .then(result => {  console.log(JSON.stringify(result)); })
 
 module.exports = calendarBaliInfo;
 

@@ -1,5 +1,5 @@
 const mock = require('../__mocks__/fetch-purnama-tilem');
-const purnamaTilem = require('../purnama-tilem');
+const purnamaTilem = require('../modules/purnama-tilem');
 
 jest.mock('../html-fetch', () => {
     return jest.fn(mock)

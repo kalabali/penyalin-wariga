@@ -1,5 +1,5 @@
 const mock = require('../__mocks__/fetch-wuku');
-const wuku = require('../wuku');
+const wuku = require('../modules/wuku');
 
 jest.mock('../html-fetch', () => {
     return jest.fn(mock)
