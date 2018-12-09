@@ -27,7 +27,7 @@ it("throw error when month set to string \"november\"", () => {
     })).rejects.toThrow(
         "expected properties month passed in as number!"
     );
-})
+});
 
 it("throw error when month set to floating number", () => {
     return expect(wuku({
@@ -36,7 +36,7 @@ it("throw error when month set to floating number", () => {
     })).rejects.toThrow(
         "expected properties month passed as non floating number!"
     );
-})
+});
 
 it("throw error when month set outside the expected value (0 to 11)", () => {
     return expect(wuku({

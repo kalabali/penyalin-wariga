@@ -1,20 +1,18 @@
 const cheerio = require('cheerio');
 const htmlFetch = require('../helpers/html-fetch');
+const { checkObject, monthChecker, yearChecker } = require('../helpers/validators');
 const utils = require('../helpers/utils');
 
-const purnamaTilem = async ({ month, year }) => {        
+const purnamaTilem = async options => {        
     try {
+        checkObject(options, ['month', 'year']);
+        const { month, year } = options;
+
+        monthChecker(month);
+        yearChecker(year);
+
         const targetedMonth = utils.getFullMonth(month);
-        if(!targetedMonth){
-            throw new Error("month expected as integer and value from 0 to 11!");
-        };
-        const targetedYear = parseInt(year);                
-        if(isNaN((targetedYear))){
-            throw new Error("year expected as integer!");
-        };
-        if(targetedYear < 0){
-            throw new Error("year expected not as negatif number!")
-        };
+
         const html = await htmlFetch(`http://kalenderbali.org/purnamatilem.php?tahun=${year}`);
         const $ = cheerio.load(html);
         let lists = $(".daftar").html().split("<br>");
