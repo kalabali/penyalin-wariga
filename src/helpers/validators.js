@@ -60,15 +60,18 @@ const monthChecker = month => {
     if(typeof(month) !== 'number'){
         throw new Error('expected properties month passed in as number!');
     }
-    if(month < 0 || month > 11){
-        throw new Error('month expect from 0 to 11!');
+    if(month % 1 !== 0){
+        throw new Error('expected properties month passed as non floating number!');
+    }
+    if(month < 1 || month > 12){
+        throw new Error('expected properties month passed integer from 1 to 12');
     }
     return true;
 }
 
 const checkObject = (obj, keys) => {
     if(typeof(obj) !== 'object'){
-        throw new Error('expected object as options!');
+        throw new Error('expected to passed object as options!');
     }
     keys.forEach(key => {
         if(!obj[key]){
@@ -80,20 +83,20 @@ const checkObject = (obj, keys) => {
 
 const yearChecker = year => {
     if(typeof(year) !== 'number'){
-        throw new Error('year expect as a number!');
+        throw new Error('expected properties year passed in as number!');
     }
     if(year % 1 !== 0){
-        throw new Error('year expect as a non floating number!');
+        throw new Error('expected properties year passed in as non floating number!');
     }
     if(year < 0){
-        throw new Error('year expect as a non negatif number!');
+        throw new Error('expected properties year passed in as non negatif number!');
     }
     return true;
 }
 
 const dateChecker = (date, month, year) => {    
     monthChecker(month);
-    yearChecker(yearChecker);
+    yearChecker(year);
     if(typeof(date) !== 'number'){
         throw new Error('expected properties date passed as number!');
     }

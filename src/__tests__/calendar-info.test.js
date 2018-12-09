@@ -1,7 +1,7 @@
 const mock = require('../__mocks__/calendar-info-11-2018');
 const calendarBaliInfo = require('../modules/calendar-bali-info');
 
-jest.mock('../html-fetch', () => {
+jest.mock('../helpers/html-fetch', () => {
     return jest.fn(mock)
 });
 

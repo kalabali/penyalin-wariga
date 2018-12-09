@@ -5,7 +5,7 @@ const rerainan = async (options) => {
     try{
         checkObject(options, ['month', 'year']);
         const { month, year } = options;
-        let date = 0;
+        let date = 0;        
         if(options.date){
             dateChecker(options.date, month, year);
             date = options.date;

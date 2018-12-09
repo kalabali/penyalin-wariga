@@ -1,33 +1,27 @@
 const cheerio = require('cheerio');
 const htmlFetch = require('../helpers/html-fetch');
-const utils = require('../helpers/utils');
+const { checkObject, monthChecker, yearChecker } = require('../helpers/validators');
 
-const wuku = async ({ month, year }) => {    
-    try {
-        const targetedMonth = utils.getFullMonth(month);
-        if(!targetedMonth){
-            throw new Error("month expected as integer and value from 0 to 11!");
-        };
-        const targetedYear = parseInt(year);                
-        if(isNaN((targetedYear))){
-            throw new Error("year expected as integer!");
-        };
-        if(targetedYear < 0){
-            throw new Error("year expected not as negatif number!")
-        };        
-        const html = await htmlFetch(`http://www.babadbali.com/pewarigaan/kalebali.php?month=${month}&year=${targetedYear}`);        
+const wuku = async options => {    
+    try {        
+        checkObject(options, ['month', 'year']);
+        const { month, year } = options;
+        monthChecker(month);
+        yearChecker(year);
+               
+        const html = await htmlFetch(`http://www.babadbali.com/pewarigaan/kalebali.php?month=${month}&year=${year}`);
+
         const $ = cheerio.load(html);
         const wukuRow = $("table[background='img/bg2.gif'] tbody tr").html().trim().split("\n");
-        let wukus = [];
         wukuRow.shift();
-        wukuRow.forEach(week => {
-            wukus.push($(week).find("h5").html());
-        })                
+        let wukus = wukuRow.map(week => $(week).find("h5").html());        
         return wukus;
     }
     catch(err){
         throw new Error(err);
     }
 }
+
+wuku({month: 11, year: 2018}).then(data => console.log({data})).catch(err => console.log({err}))
 
 module.exports = wuku;
