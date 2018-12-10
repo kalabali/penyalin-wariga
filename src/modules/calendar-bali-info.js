@@ -71,8 +71,8 @@ const calendarBaliInfo = async (options) => {
     }
 }
 
-calendarBaliInfo({year: 2018, month: 1 })
-    .then(result => {  console.log(JSON.stringify(result)); })
+// calendarBaliInfo({year: 2018, month: 1 })
+//     .then(result => {  console.log(JSON.stringify(result)); })
 
 module.exports = calendarBaliInfo;
 
