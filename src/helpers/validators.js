@@ -74,7 +74,7 @@ const checkObject = (obj, keys) => {
         throw new Error('expected to passed object as options!');
     }
     keys.forEach(key => {
-        if(!obj[key]){
+        if(!obj.hasOwnProperty(key)){
             throw new Error(`expected properties ${key} passed in options`);
         }
     })
@@ -103,8 +103,8 @@ const dateChecker = (date, month, year) => {
     if(date % 1 !== 0){
         throw new Error('expected properties date passed as integer!');
     }
-    if(date < 0){
-        throw new Error('expected properties date passed not as negatif integer!');
+    if(date <= 0){
+        throw new Error('expected properties date passed not as negatif integer or zero!');
     }
     const lastDate = getLastDate(month, year);
     if(date > lastDate){

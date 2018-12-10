@@ -6,9 +6,11 @@ const rerainan = async (options) => {
         checkObject(options, ['month', 'year']);
         const { month, year } = options;
         let date = 0;        
-        if(options.date){
+        
+        if(options.hasOwnProperty('date')){
             dateChecker(options.date, month, year);
             date = options.date;
+            console.log("masul")
         }
         else{
             monthChecker(month);

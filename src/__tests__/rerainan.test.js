@@ -62,25 +62,25 @@ it("throw error when year set to string \"2018\"", () => {
         month: 11,
         year: "2018"
     })).rejects.toThrow(
-        "year expect as a number!"
+        "expected properties year passed in as number!"
     );
 });
 
-it("throw error when month passed as floating number", () => {
-    return expect(rerainan({ 
-        month: 10.5,
-        year: 2018 
-    }))
-        .rejects.toThrow('expected properties month passed as non floating number!');
+it("throw error when year set to floating number", () => {
+    return expect(rerainan({
+        month: 11, 
+        year: 2018.5
+    })).rejects.toThrow(
+        "expected properties year passed in as non floating number!"
+    );
 });
 
-it("throw error when date passed as not number", () => {
+it("throw error when year is below 0", () => {
     return expect(rerainan({
-        date: "6",
-        month: 11,
-        year: 2018
+        month: 11, 
+        year: -2018
     })).rejects.toThrow(
-        "expected properties date passed as number!"
+        "expected properties year passed in as non negatif number!"
     );
 });
 
@@ -166,6 +166,46 @@ it("return set of rerainan that happen on november 2018", () => {
                 ])
             )
         })
+});
+
+it("throw error when date passed as string", () => {
+    return expect(rerainan({
+        date: "6",
+        month: 11,
+        year: 2018
+    })).rejects.toThrow(
+        "expected properties date passed as number!"
+    );
+});
+
+it("throw error when date passed as floating number", () => {
+    return expect(rerainan({
+        date: 6.5,
+        month: 11,
+        year: 2018
+    })).rejects.toThrow(
+        "expected properties date passed as integer!"
+    );
+});
+
+it("throw error when date passed as negatif number", () => {
+    return expect(rerainan({
+        date: -1,
+        month: 11,
+        year: 2018
+    })).rejects.toThrow(
+        "expected properties date passed not as negatif integer or zero!"
+    );
+});
+
+it("throw error when date passed as zero", () => {
+    return expect(rerainan({
+        date: 0,
+        month: 11,
+        year: 2018
+    })).rejects.toThrow(
+        "expected properties date passed not as negatif integer or zero!"
+    );
 });
 
 // it("return rerainan on 6th november 2018", () => {
