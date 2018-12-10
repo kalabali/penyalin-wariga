@@ -5,19 +5,24 @@ jest.mock('../modules/calendar-bali-info', () => {
     return jest.fn(mock)
 });
 
-it("throw error when passed non object", () => {
+it("throw error when passed nothing", () => {
+    return expect(rerainan())
+        .rejects.toThrow('expected to passed object as options!');
+});
+
+it("throw error when only passed string", () => {
     return expect(rerainan("non object"))
-        .rejects.toThrow('expected object as options!');
+        .rejects.toThrow('expected to passed object as options!');
+});
+
+it("throw error when only passed number", () => {
+    return expect(rerainan(12))
+        .rejects.toThrow('expected to passed object as options!');
 });
 
 it("throw error when month is not passed in options", () => {
     return expect(rerainan({ year: 2018 }))
         .rejects.toThrow(`expected properties month passed in options`);
-});
-
-it("throw error when year is not passed in options", () => {
-    return expect(rerainan({ month: 11 }))
-        .rejects.toThrow(`expected properties year passed in options`);
 });
 
 it("throw error when month set to string \"november\"", () => {
@@ -27,6 +32,29 @@ it("throw error when month set to string \"november\"", () => {
     })).rejects.toThrow(
         "expected properties month passed in as number!"
     );
+});
+
+it("throw error when month set to floating number", () => {
+    return expect(rerainan({
+        month: 12.5,
+        year: 2018
+    })).rejects.toThrow(
+        "expected properties month passed as non floating number!"
+    );
+});
+
+it("throw error when month set outside the expected value (0 to 11)", () => {
+    return expect(rerainan({
+        month: -1, 
+        year: 2018
+    })).rejects.toThrow(
+        "expected properties month passed integer from 1 to 12"
+    );
+});
+
+it("throw error when year is not passed in options", () => {
+    return expect(rerainan({ month: 11 }))
+        .rejects.toThrow(`expected properties year passed in options`);
 });
 
 it("throw error when year set to string \"2018\"", () => {

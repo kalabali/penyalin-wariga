@@ -59,7 +59,7 @@ const calendarBaliInfo = async (options) => {
                 })
             })
             memorialDay.push(storedP);
-        })
+        });
 
         return {
             rerainanDay,

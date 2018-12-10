@@ -20,6 +20,12 @@ it("throw error when only passed number", () => {
         .rejects.toThrow('expected to passed object as options!');
 });
 
+it("throw error when month is not set", () => {
+    return expect(purnamaTilem({year: 2018})).rejects.toThrow(
+        " expected properties month passed in options"
+    );
+});
+
 it("throw error when month set to string \"november\"", () => {
     return expect(purnamaTilem({
         month: "november",
