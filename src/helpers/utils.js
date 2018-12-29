@@ -17,6 +17,24 @@ function getFullMonth(index){
     return months[index - 1];
 }
 
+function getEngMonth(index){
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+    return months[index - 1];
+}
+
 function insertToArray(array, event, date){            
     if(array.length === 0){
         array.push({
@@ -51,5 +69,6 @@ function insertToArray(array, event, date){
 
 module.exports = {
     insertToArray,
-    getFullMonth
+    getFullMonth,
+    getEngMonth
 }

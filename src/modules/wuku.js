@@ -22,6 +22,6 @@ const wuku = async options => {
     }
 }
 
-// wuku({month: 11, year: 2018}).then(data => console.log({data})).catch(err => console.log({err}))
+wuku({month: 12, year: 2018}).then(data => console.log({data})).catch(err => console.log({err}))
 
 module.exports = wuku;
