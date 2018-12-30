@@ -1,37 +1,17 @@
-var cron = require('node-cron');
+const cron = require('node-cron');
+const db = require('./src/helpers/db');
 
-cron.schedule('* * * * *', () => {
-    console.log(`running at ${Date()}`);
+db.connect((err) => {
+  if(err){
+    console.log(err);
+    console.log('unable to connect to database');
+  }
+  else{
+    console.log('connected to database');
+    db.disconnect();
+  }
 });
 
-
-
-// const purnamaTilem = require('./src/purnama-tilem');
-// const wuku = require('./src/wuku');
-
-// const kalenderBali = {
-//     purnamaTilem,
-//     wuku
-// }
-
-// // purnamaTilem(11, 2019)
-// // .then(data => console.log({data}))
-// // .catch(err => console.log({erre: err }))
-
-// kalenderBali.purnamaTilem({
-//     month: 11,
-//     year: 2018
-// })
-//     .then(data => console.log({ data }))
-//     .catch(err => console.log({ err }))
-
-// kalenderBali.wuku({
-//     month: 11,
-//     year: 2018
-// })
-//     .then(data => console.log({ data }))
-//     .catch(err => console.log({ err }))
-
-// module.exports = kalenderBali
-
-
+// cron.schedule('* * * * *', () => {
+//     console.log(`running at ${Date()}`);
+// });

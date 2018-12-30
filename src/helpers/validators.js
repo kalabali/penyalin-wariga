@@ -98,13 +98,13 @@ const dateChecker = (date, month, year) => {
     monthChecker(month);
     yearChecker(year);
     if(typeof(date) !== 'number'){
-        throw new Error('expected properties date passed as number!');
+        throw new Error('expected properties date passed in as number!');
     }
     if(date % 1 !== 0){
-        throw new Error('expected properties date passed as integer!');
+        throw new Error('expected properties date passed in as non floating number!');
     }
     if(date <= 0){
-        throw new Error('expected properties date passed not as negatif integer or zero!');
+        throw new Error('expected properties date passed not as negatif number or zero!');
     }
     const lastDate = getLastDate(month, year);
     if(date > lastDate){
