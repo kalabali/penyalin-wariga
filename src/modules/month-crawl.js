@@ -19,6 +19,7 @@ const monthCrawl = async options => {
             },
             year : year,
             caka_year : '',
+            timestamp: new Date(`${year}-${month < 10 ? `0${month}` : month}-01T00:00:00Z`).valueOf(),
             weeks: []
         };
 
@@ -48,9 +49,58 @@ const monthCrawl = async options => {
                 bhatara: bhatara[index],
                 dates : []
             };
-        })
+        });
 
-        return monthData;
+        //getting event to push
+        const events = $("div[id^='right-column'] .box tr").map((index, el) => {            
+            if($(el).find('img').length !== 0){
+                return null;
+            }
+            const { id } = $(el).parent().parent().parent().parent().attr();            
+            let eventType = '';
+            if(id === 'right-column-1'){
+                eventType = 'rerainan';
+            }
+            else if(id === 'right-column-2'){
+                eventType = 'ceremonial';
+            }
+            else if(id === 'right-column-3'){
+                eventType = 'religious day';
+            }
+            else if(id === 'right-column-4'){
+                eventType = 'temple\'s rerainan';
+            }
+            const event = $(el).text().trim().split('.');
+            const date = parseInt(event[0]);
+            const events = event[1].split(';');            
+            return events.map(event => {
+                // console.log({
+                //     date: date,
+                //     month: month,
+                //     year: year,
+                //     timestamp: new Date(`${year}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}T00:00:00Z`).valueOf(),
+                //     event: {
+                //         event_name: event.trim(),
+                //         event_type: eventType                        
+                //     }
+                // });
+                return {
+                    date: date,
+                    month: month,
+                    year: year,
+                    timestamp: new Date(`${year}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}T00:00:00Z`).valueOf(),
+                    event: {
+                        event_name: event.trim(),
+                        event_type: eventType                        
+                    }
+                };
+            });        
+        }).get();
+        // console.log({rerainans})
+        return {
+            monthData,
+            events
+        };
 
     }
     catch(err){
