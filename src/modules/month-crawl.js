@@ -54,6 +54,31 @@ const monthCrawl = async options => {
             };
         });
 
+        let listing = $('table.listing > tbody > tr').map((index, el) => $(el).html()).get();
+        // console.log(listing)
+        listing.shift();
+        listing.pop();
+        listing.forEach(list => {
+            const cells = $('td.first', list).map((index, el) => $(el).html()).get();            
+            cells.shift();
+            cells.forEach((cell, index) => {                
+                if($(cell).children().length === 0){
+                    return false;
+                }                
+                monthData.weeks[index].dates.push({
+                    date : $('span > a',cell).html(),
+                    month: {
+                        index: month,
+                        english: getEngMonth(month),
+                        bahasa: getFullMonth(month)
+                    },
+                    year: { 
+                        masehi: year
+                    }
+                });            
+            });
+        })        
+
         //getting event to push
         const events = $("div[id^='right-column'] .box tr").map((index, el) => {
             if ($(el).find('img').length !== 0) {
@@ -92,7 +117,7 @@ const monthCrawl = async options => {
 
         return {
             monthData,
-            events
+            // events
         };
 
     }
@@ -102,6 +127,8 @@ const monthCrawl = async options => {
 }
 
 monthCrawl({ month: 1, year: 2019 })
-    .then(data => console.log(JSON.stringify(data))).catch(err => console.log(err))
+    .then(data => console.log(
+        JSON.stringify(data)
+        )).catch(err => console.log(err))
 
 module.exports = monthCrawl;
