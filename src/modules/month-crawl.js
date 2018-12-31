@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const htmlFetch = require('../helpers/html-fetch');
 const { checkObject, monthChecker, yearChecker } = require('../helpers/validators');
-const { getEngMonth } = require('../helpers/utils');
+const { getEngMonth, getFullMonth } = require('../helpers/utils');
 
 const monthCrawl = async options => {
     try {
@@ -15,17 +15,20 @@ const monthCrawl = async options => {
         let monthData = {
             month: {
                 index: month,
-                string: getEngMonth(month)
+                english: getEngMonth(month),
+                bahasa: getFullMonth(month)
             },
-            year: year,
-            caka_year: '',
-            timestamp: new Date(`${year}-${month < 10 ? `0${month}` : month}-01T00:00:00Z`).valueOf(),
+            year: {
+                masehi: year,
+                caka: ''
+            },            
+            timestamp: new Date(`${year}-${month < 10 ? `0${month}` : month}-01T00:00:00Z`),
             weeks: []
         };
 
         const $ = cheerio.load(html);
 
-        monthData.caka_year = parseInt($('div.judul2').text().split(' ')[1]);
+        monthData.year.caka = parseInt($('div.judul2').text().split(' ')[1]);
         const wukus = $('td.judulAtas.orange').map((index, el) => {
             return $(el).text().trim();
         }).get();
@@ -78,7 +81,7 @@ const monthCrawl = async options => {
                     date: date,
                     month: month,
                     year: year,
-                    timestamp: new Date(`${year}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}T00:00:00Z`).valueOf(),
+                    timestamp: new Date(`${year}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}T00:00:00Z`),
                     event: {
                         event_name: event.trim(),
                         event_type: eventType
@@ -99,6 +102,6 @@ const monthCrawl = async options => {
 }
 
 monthCrawl({ month: 1, year: 2019 })
-    .then(data => console.log({ data })).catch(err => console.log(err))
+    .then(data => console.log(JSON.stringify(data))).catch(err => console.log(err))
 
 module.exports = monthCrawl;

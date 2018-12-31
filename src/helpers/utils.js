@@ -35,6 +35,35 @@ function getEngMonth(index){
     return months[index - 1];
 }
 
+
+function parseDateToMasehi(balineseDay){
+    const day = {
+        Redite: "Minggu",
+        Soma: "Senin",
+        Anggara: "Selasa",
+        Buda: "Rabu",
+        Wraspati: "Kamis",
+        Sukra: "Jumat",
+        Saniscara: "Sabtu"
+    }
+
+    return day[balineseDay];
+}
+
+function parseDateToEnglish(balineseDay){
+    const day = {
+        Redite: "Sunday",
+        Soma: "Monday",
+        Anggara: "Tuesday",
+        Buda: "Wednesday",
+        Wraspati: "Thursday",
+        Sukra: "Friday",
+        Saniscara: "Saturday"
+    }
+
+    return day[balineseDay];
+}
+
 function insertToArray(array, event, date){            
     if(array.length === 0){
         array.push({
@@ -70,5 +99,7 @@ function insertToArray(array, event, date){
 module.exports = {
     insertToArray,
     getFullMonth,
-    getEngMonth
+    getEngMonth,
+    parseDateToMasehi,
+    parseDateToEnglish
 }
