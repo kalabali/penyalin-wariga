@@ -1,25 +1,24 @@
 const cron = require('node-cron');
-const http = require('http')
+const express = require('express');
 const db = require('./src/helpers/db');
 const monthCrawl = require('./src/modules/month-crawl');
 const dayCrawl = require('./src/modules/day-crawl');
 const { getLastDate } = require('./src/helpers/utils');
 
-const port = 3000
+const app = express();
 
-const requestHandler = (request, response) => {
-  console.log(request.url)
-  response.end('Hello Node.js Server!')
-}
+app.listen(process.env.PORT || 4000, () => {
+  console.log('listenning on 4000');
+});
 
-const server = http.createServer(requestHandler)
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
-server.listen(port, (err) => {
-  if (err) {
-    return console.log('something bad happened', err)
-  }
-
-  console.log(`server is listening on ${port}`)
+app.get('/', (req,res) => {
+  res.status(200).send('ntar')
 })
 
 db.connect(async (err) => {
