@@ -33,6 +33,7 @@ db.connect(async (err) => {
 
 cron.schedule('*/3 * * * *', async () => {
   console.log(`running at ${Date()}`);
+  return true;
   try {
     const { forward_crawl } = await db.getDb().db('kalender-bali').collection('crawl_options').findOne({
       '_id': db.ObjectId("5c27735201c398e7aa61c6ee")
@@ -78,13 +79,17 @@ const startCrawl = async (month, year) => {
 
     const datesEvent = await Promise.all(datesFetch);
 
-    monthData.weeks = await Promise.all(monthData.weeks.map(async week => {
+    monthData.weeks = await Promise.all(monthData.weeks.map(async (week, index) => {
       try {
         week.dates = week.dates.map(d => {
           const { date } = d;
           const data = datesEvent.find(de => {
+            console.log(de.dateData.date)
+            console.log(date)
             return de.dateData.date == date;
           });
+          console.log({week, index})
+          console.log(data)
 
           const dEvents = events.filter(event => {
             return event.date == date;
@@ -128,3 +133,5 @@ const startCrawl = async (month, year) => {
     console.log(e)
   }
 }
+
+startCrawl(7, 2019).then(data => console.log()).catch(e => console.log(e))
