@@ -28,7 +28,7 @@ const monthCrawl = async options => {
 
         const $ = cheerio.load(html);
 
-        monthData.year.caka = parseInt($('div.judul2').text().split(' ')[1]);
+        monthData.year.caka = parseInt($('div.judul2').text().trim().split(' ').pop());
         const wukus = $('td.judulAtas.orange').map((index, el) => {
             return $(el).text().trim();
         }).get();
@@ -66,7 +66,7 @@ const monthCrawl = async options => {
                     return false;
                 }                
                 monthData.weeks[index].dates.push({
-                    date : $('span > a',cell).html(),
+                    date : parseInt($('span > a',cell).html()),
                     month: {
                         index: month,
                         english: getEngMonth(month),
@@ -107,7 +107,7 @@ const monthCrawl = async options => {
                     month: month,
                     year: year,
                     timestamp: new Date(`${year}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}T00:00:00Z`),
-                    event: {
+                    events: {
                         event_name: event.trim(),
                         event_type: eventType
                     }
@@ -117,7 +117,7 @@ const monthCrawl = async options => {
 
         return {
             monthData,
-            // events
+            events
         };
 
     }
@@ -126,9 +126,9 @@ const monthCrawl = async options => {
     }
 }
 
-monthCrawl({ month: 1, year: 2019 })
-    .then(data => console.log(
-        JSON.stringify(data)
-        )).catch(err => console.log(err))
+// monthCrawl({ month: 1, year: 2019 })
+//     .then(data => console.log(
+//         JSON.stringify(data)
+//         )).catch(err => console.log(err))
 
 module.exports = monthCrawl;

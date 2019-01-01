@@ -58,16 +58,7 @@ const dayCrawl = async options => {
             ingkel: '',
             sasih : '',
             urip: '',           
-            event : [ 
-                {
-                    event_name : 'purnama',
-                    event_type : 'rerainan'
-                }, 
-                {
-                    event_name : 'galungan',
-                    event_type : 'rerainan'
-                }
-            ]
+            events : []
         };
 
         //wuku, nama hari, sasih, purnama tilem status                
@@ -102,18 +93,17 @@ const dayCrawl = async options => {
         dateData.wewaran.astawara = wewaranSecondCell[2];
         dateData.wewaran.sangawara = wewaranSecondCell[3];
         dateData.wewaran.dasawara = wewaranSecondCell[4];
-        
-        let dateCell = $('.isitanggal.hitam.tengah')
-        return dateData;
+
+        return { dateData };
     }
     catch (err) {
         throw new Error(err);
     }
 }
 
-dayCrawl({
-    month: 1,
-    date: 3,
-    year: 2019
-})   .then(data => console.log(JSON.stringify(data)))
+// dayCrawl({
+//     month: 1,
+//     date: 3,
+//     year: 2019
+// })   .then(data => console.log(JSON.stringify(data)))
 module.exports = dayCrawl;

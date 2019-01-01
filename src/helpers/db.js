@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 const url = `mongodb://imdbsd:denpasar220395@ds211592.mlab.com:11592/kalender-bali`;
 const mongoOptions = {
     useNewUrlParser: true
@@ -18,7 +19,7 @@ const connect = callback => {
                 callback(err);
             }
             else{
-                state.db = client;
+                state.db = client;                
                 callback();
             }
         });
@@ -42,5 +43,6 @@ const getDb = () => {
 module.exports = {
     getDb,
     connect,
-    disconnect
+    disconnect,
+    ObjectId
 }

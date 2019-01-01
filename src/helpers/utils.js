@@ -96,10 +96,35 @@ function insertToArray(array, event, date){
     return array;
 }
 
+const getLastDate = (month, year) => {
+    let isKabisat = false;
+    if(year % 4 == 0){
+        if(year % 100 == 0){
+            if(year % 400 == 0){
+                isKabisat = true;
+            }            
+        }
+        else{
+            isKabisat = true;
+        }
+    }
+    if(isKabisat && month === 2){
+        return 29;
+    }
+    else if(month === 2){
+        return 28;
+    }
+    else if((month > 7 && month % 2 == 0) || (month < 7 && month % 2 == 1)){
+        return 31;
+    }
+    return 30;    
+}
+
 module.exports = {
     insertToArray,
     getFullMonth,
     getEngMonth,
     parseDateToMasehi,
-    parseDateToEnglish
+    parseDateToEnglish,
+    getLastDate
 }
