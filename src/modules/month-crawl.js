@@ -47,9 +47,9 @@ const monthCrawl = async options => {
 
         monthData.weeks = wukus.map((wuku, index) => {
             return {
-                wuku: wuku,
-                ingkel: ingkels[index],
-                bhatara: bhatara[index],
+                wuku: wuku.toLowerCase(),
+                ingkel: ingkels[index].toLowerCase(),
+                bhatara: bhatara[index].toLowerCase(),
                 dates: []
             };
         });
@@ -108,7 +108,7 @@ const monthCrawl = async options => {
                     year: year,
                     timestamp: new Date(`${year}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}T00:00:00Z`),
                     events: {
-                        event_name: event.trim(),
+                        event_name: event.trim().toLowerCase(),
                         event_type: eventType
                     }
                 };

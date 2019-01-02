@@ -63,11 +63,11 @@ const dayCrawl = async options => {
 
         //wuku, nama hari, sasih, purnama tilem status                
         let centerUpCell = $(".isitanggal.hitam.tengahbawah").html().trim().split("<br>");                                
-        dateData.day_name.balinese = $(centerUpCell[0]).text();        
+        dateData.day_name.balinese = $(centerUpCell[0]).text().toLowerCase();        
         dateData.day_name.bahasa = parseDateToMasehi($(centerUpCell[0]).text());
         dateData.day_name.english = parseDateToEnglish($(centerUpCell[0]).text());
-        dateData.wuku = centerUpCell[1];
-        dateData.sasih = centerUpCell[2].split("-")[1];
+        dateData.wuku = centerUpCell[1].toLowerCase();
+        dateData.sasih = centerUpCell[2].split("-")[1].toLowerCase();
         dateData.penanggal_pangelong.value = parseInt($(centerUpCell[3]).text());
         if(centerUpCell.indexOf("red")){
             dateData.penanggal_pangelong.status = "penanggal";
@@ -82,17 +82,17 @@ const dayCrawl = async options => {
         wewaranSecondCell = $(wewaranSecondCell).html().trim().split("<br>");                
         dateData.urip = wewaranFirstCell[4].split("=")[1];
         if(wewaranFirstCell[3] !== "--"){
-            dateData.wewaran.ekawara = wewaranFirstCell[3];
+            dateData.wewaran.ekawara = wewaranFirstCell[3].toLowerCase();
         }
-        dateData.wewaran.dwiwara = wewaranFirstCell[2];
-        dateData.wewaran.triwara = $(wewaranFirstCell[0]).text();
-        dateData.wewaran.caturwara = wewaranFirstCell[1];       
-        dateData.wewaran.pancawara = $(wewaranSecondCell[0]).text();
-        dateData.wewaran.sadwara = wewaranSecondCell[1];
-        dateData.wewaran.saptawara = $(centerUpCell[0]).text();
-        dateData.wewaran.astawara = wewaranSecondCell[2];
-        dateData.wewaran.sangawara = wewaranSecondCell[3];
-        dateData.wewaran.dasawara = wewaranSecondCell[4];
+        dateData.wewaran.dwiwara = wewaranFirstCell[2].toLowerCase();
+        dateData.wewaran.triwara = $(wewaranFirstCell[0]).text().toLowerCase();
+        dateData.wewaran.caturwara = wewaranFirstCell[1].toLowerCase();       
+        dateData.wewaran.pancawara = $(wewaranSecondCell[0]).text().toLowerCase();
+        dateData.wewaran.sadwara = wewaranSecondCell[1].toLowerCase();
+        dateData.wewaran.saptawara = $(centerUpCell[0]).text().toLowerCase();
+        dateData.wewaran.astawara = wewaranSecondCell[2].toLowerCase();
+        dateData.wewaran.sangawara = wewaranSecondCell[3].toLowerCase();
+        dateData.wewaran.dasawara = wewaranSecondCell[4].toLowerCase();
 
         return { dateData };
     }

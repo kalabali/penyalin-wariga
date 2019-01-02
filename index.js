@@ -135,4 +135,4 @@ const startCrawl = async (month, year) => {
   }
 }
 
-// startCrawl(7, 2019).then(data => console.log()).catch(e => console.log(e))
+startCrawl(7, 2019).then(data => console.log()).catch(e => console.log(e))

@@ -1,36 +1,36 @@
 function getFullMonth(index){
     index = parseInt(index);    
     const months = [
-        "Januari",
-        "Februari",
-        "Maret",
-        "April",
-        "Mei",
-        "Juni",
-        "Juli",
-        "Agustus",
-        "September",
-        "Oktober",
-        "Nopember",
-        "Desember"
+        "januari",
+        "februari",
+        "maret",
+        "april",
+        "mei",
+        "juni",
+        "juli",
+        "agustus",
+        "september",
+        "oktober",
+        "nopember",
+        "desember"
     ];
     return months[index - 1];
 }
 
 function getEngMonth(index){
     const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+        "january",
+        "february",
+        "march",
+        "april",
+        "may",
+        "june",
+        "july",
+        "august",
+        "september",
+        "october",
+        "november",
+        "december"
     ];
     return months[index - 1];
 }
@@ -38,13 +38,13 @@ function getEngMonth(index){
 
 function parseDateToMasehi(balineseDay){
     const day = {
-        Redite: "Minggu",
-        Soma: "Senin",
-        Anggara: "Selasa",
-        Buda: "Rabu",
-        Wraspati: "Kamis",
-        Sukra: "Jumat",
-        Saniscara: "Sabtu"
+        Redite: "minggu",
+        Soma: "senin",
+        Anggara: "selasa",
+        Buda: "rabu",
+        Wraspati: "kamis",
+        Sukra: "jumat",
+        Saniscara: "sabtu"
     }
 
     return day[balineseDay];
@@ -52,13 +52,13 @@ function parseDateToMasehi(balineseDay){
 
 function parseDateToEnglish(balineseDay){
     const day = {
-        Redite: "Sunday",
-        Soma: "Monday",
-        Anggara: "Tuesday",
-        Buda: "Wednesday",
-        Wraspati: "Thursday",
-        Sukra: "Friday",
-        Saniscara: "Saturday"
+        Redite: "sunday",
+        Soma: "monday",
+        Anggara: "tuesday",
+        Buda: "wednesday",
+        Wraspati: "thursday",
+        Sukra: "friday",
+        Saniscara: "saturday"
     }
 
     return day[balineseDay];
