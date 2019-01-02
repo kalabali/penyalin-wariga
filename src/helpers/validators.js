@@ -56,8 +56,7 @@ const dateChecker = (date, month, year) => {
     return true;
 }
 
-module.exports = {
-    validateDate,
+module.exports = {    
     monthChecker,
     checkObject,
     yearChecker,
