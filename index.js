@@ -67,7 +67,7 @@ cron.schedule('*/2 * * * *', async () => {
     let nextMonth = forward_crawl.month === 12 ? 1 : forward_crawl.month + 1;
     let nextYear = forward_crawl.month === 12 ? forward_crawl.year + 1 : forward_crawl.year;
 
-    const backwardMonthData = await startCrawl(forward_crawl.month, forward_crawl.year);
+    const backwardMonthData = await startCrawl(backward_crawl.month, backward_crawl.year);
     console.log(JSON.stringify({ backward: backwardMonthData }))
 
     let backMonth = backward_crawl.month === 1 ? 12 : backward_crawl.month - 1;
