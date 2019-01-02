@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const cheerio = require('cheerio');
 const htmlFetch = require('../helpers/html-fetch');
 const { checkObject, monthChecker, yearChecker } = require('../helpers/validators');
@@ -10,7 +12,7 @@ const monthCrawl = async options => {
         monthChecker(month);
         yearChecker(year);
 
-        const html = await htmlFetch(`http://kalenderbali.info/?month=${month}&year=${year}&submit=Tampilkan`);
+        const html = await htmlFetch(`${process.env.SOURCE_DOT_INFO_URL}/?month=${month}&year=${year}&submit=Tampilkan`);
 
         let monthData = {
             month: {
@@ -126,9 +128,9 @@ const monthCrawl = async options => {
     }
 }
 
-// monthCrawl({ month: 1, year: 2019 })
-//     .then(data => console.log(
-//         JSON.stringify(data)
-//         )).catch(err => console.log(err))
+monthCrawl({ month: 1, year: 2019 })
+    .then(data => console.log(
+        JSON.stringify(data)
+        )).catch(err => console.log(err))
 
 module.exports = monthCrawl;

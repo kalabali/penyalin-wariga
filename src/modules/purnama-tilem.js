@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const cheerio = require('cheerio');
 const htmlFetch = require('../helpers/html-fetch');
 const { checkObject, monthChecker, yearChecker } = require('../helpers/validators');
@@ -13,7 +15,7 @@ const purnamaTilem = async options => {
 
         const targetedMonth = utils.getFullMonth(month);
 
-        const html = await htmlFetch(`http://kalenderbali.org/purnamatilem.php?tahun=${year}`);
+        const html = await htmlFetch(`${process.env.SOURCE_DOT_ORG_URL}/purnamatilem.php?tahun=${year}`);
         const $ = cheerio.load(html);
         let lists = $(".daftar").html().split("<br>");
         let dates = [];        

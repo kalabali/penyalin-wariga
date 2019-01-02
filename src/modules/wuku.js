@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const cheerio = require('cheerio');
 const htmlFetch = require('../helpers/html-fetch');
 const { checkObject, monthChecker, yearChecker } = require('../helpers/validators');
@@ -9,7 +11,7 @@ const wuku = async options => {
         monthChecker(month);
         yearChecker(year);
                
-        const html = await htmlFetch(`http://www.babadbali.com/pewarigaan/kalebali.php?month=${month}&year=${year}`);
+        const html = await htmlFetch(`${process.env.SOURCE_BABAD_URL}/pewarigaan/kalebali.php?month=${month}&year=${year}`);
 
         const $ = cheerio.load(html);
         const wukuRow = $("table[background='img/bg2.gif'] tbody tr").html().trim().split("\n");
@@ -22,6 +24,6 @@ const wuku = async options => {
     }
 }
 
-wuku({month: 12, year: 2018}).then(data => console.log({data})).catch(err => console.log({err}))
+// wuku({month: 12, year: 2018}).then(data => console.log({data})).catch(err => console.log({err}))
 
 module.exports = wuku;

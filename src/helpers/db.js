@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
-const url = `mongodb://imdbsd:denpasar220395@ds211592.mlab.com:11592/kalender-bali`;
+const url = process.env.MONGODB_URL;
 const mongoOptions = {
     useNewUrlParser: true
 };

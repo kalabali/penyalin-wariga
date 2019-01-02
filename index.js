@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const cron = require('node-cron');
 const express = require('express');
 const axios = require('axios');
@@ -32,7 +34,7 @@ db.connect(async (err) => {
   }
 });
 
-cron.schedule('*/30 * * * *', () => {
+cron.schedule('*/2 * * * *', () => {
   axios.get("https://penyalin-wariga.herokuapp.com/")
   .then(({ data }) => {
     console.log(data);
@@ -43,8 +45,8 @@ cron.schedule('*/30 * * * *', () => {
 cron.schedule('*/2 * * * *', async () => {
   console.log(`running at ${Date()}`);  
   try {
-    const { forward_crawl } = await db.getDb().db('kalender-bali').collection('crawl_options').findOne({
-      '_id': db.ObjectId("5c27735201c398e7aa61c6ee")
+    const { forward_crawl } = await db.getDb().db(process.env.DB_NAME).collection('crawl_options').findOne({
+      '_id': db.ObjectId(process.env.CRAWL_ID)
     });
     if (forward_crawl.month === 1 && forward_crawl.year === 3001) {
       console.log('stop forward')
@@ -57,8 +59,8 @@ cron.schedule('*/2 * * * *', async () => {
     let nextMonth = forward_crawl.month === 12 ? 1 : forward_crawl.month + 1;
     let nextYear = forward_crawl.month === 12 ? forward_crawl.year + 1 : forward_crawl.year;
 
-    const status = await db.getDb().db('kalender-bali').collection('crawl_options').updateOne({
-      '_id': db.ObjectId("5c27735201c398e7aa61c6ee")
+    const status = await db.getDb().db(process.env.DB_NAME).collection('crawl_options').updateOne({
+      '_id': db.ObjectId(process.env.CRAWL_ID)
     }, {
         $set: {
           "forward_crawl.month": nextMonth,
@@ -108,7 +110,7 @@ const startCrawl = async (month, year) => {
           return data.dateData;
         });        
 
-        let results = await db.getDb().db('kalender-bali').collection('calendar_dates').insertMany(week.dates);
+        let results = await db.getDb().db(process.env.DB_NAME).collection('calendar_dates').insertMany(week.dates);
         const { insertedIds, insertedCount } = results;
         for (let i = 0; i < insertedCount; i++) {
           week.dates[i] = db.ObjectId(insertedIds[i]);
@@ -123,7 +125,7 @@ const startCrawl = async (month, year) => {
       }
     }));
 
-    let results = await db.getDb().db('kalender-bali').collection('calendar_months').insertOne(monthData);
+    let results = await db.getDb().db(process.env.DB_NAME).collection('calendar_months').insertOne(monthData);
     // console.log(results)    
     // console.log(JSON.stringify(monthData))
     // console.log(JSON.stringify(events))

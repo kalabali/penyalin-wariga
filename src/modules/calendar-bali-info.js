@@ -1,6 +1,7 @@
+require('dotenv').config();
+
 const cheerio = require('cheerio');
 const htmlFetch = require('../helpers/html-fetch');
-const utils = require('../helpers/utils');
 const { monthChecker, checkObject, yearChecker } = require('../helpers/validators');
 
 const calendarBaliInfo = async options => {    
@@ -11,7 +12,7 @@ const calendarBaliInfo = async options => {
         monthChecker(month);
         yearChecker(year);
         
-        const html = await htmlFetch(`http://kalenderbali.info/?month=${month}&year=${year}`);        
+        const html = await htmlFetch(`${process.env.SOURCE_DOT_INFO_URL}/?month=${month}&year=${year}`);        
         const $ = cheerio.load(html);
 
         const wuku = $('.judulAtas.orange').map((index, el) => $(el).text().trim()).get()
@@ -23,8 +24,8 @@ const calendarBaliInfo = async options => {
     }
 }
 
-calendarBaliInfo({year: 2018, month: 12 })
-    .then(result => {  console.log(JSON.stringify(result)); })
+// calendarBaliInfo({year: 2018, month: 12 })
+//     .then(result => {  console.log(JSON.stringify(result)); })
 
 module.exports = calendarBaliInfo;
 

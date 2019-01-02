@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const cheerio = require('cheerio');
 const htmlFetch = require('../helpers/html-fetch');
 const { checkObject, dateChecker } = require('../helpers/validators');
@@ -9,7 +11,7 @@ const dayCrawl = async options => {
         const { month, year, date } = options;        
         dateChecker(date, month, year);
 
-        const html = await htmlFetch(`http://www.kalenderbali.info/kalender/detailHari/${date}/${month}/${year}/hitam/html`);
+        const html = await htmlFetch(`${process.env.SOURCE_DOT_INFO_URL}/kalender/detailHari/${date}/${month}/${year}/hitam/html`);
 
         let $ = cheerio.load(html);
 
