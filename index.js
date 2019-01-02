@@ -34,7 +34,7 @@ db.connect(async (err) => {
   }
 });
 
-cron.schedule('*/2 * * * *', () => {
+cron.schedule('*/15 * * * *', () => {
   axios.get("https://penyalin-wariga.herokuapp.com/")
   .then(({ data }) => {
     console.log(data);
@@ -43,22 +43,36 @@ cron.schedule('*/2 * * * *', () => {
 })
 
 cron.schedule('*/2 * * * *', async () => {
-  console.log(`running at ${Date()}`);  
-  return true;
+  console.log(`running at ${Date()}`);
   try {
-    const { forward_crawl } = await db.getDb().db(process.env.DB_NAME).collection('crawl_options').findOne({
+    const { forward_crawl, backward_crawl, is_stop } = await db.getDb().db(process.env.DB_NAME).collection('crawl_options').findOne({
       '_id': db.ObjectId(process.env.CRAWL_ID)
     });
-    if (forward_crawl.month === 1 && forward_crawl.year === 3001) {
+
+    console.log({ forward_crawl, backward_crawl, is_stop })
+
+    if(is_stop){
+      console.log("stop crawl");
+      return true;
+    }
+    if ((forward_crawl.month === 1 && forward_crawl.year === 3001) || (backward_crawl.month === 1 && backward_crawl.year === 1600)) {
       console.log('stop forward')
       db.disconnect();
       return true;
-    }
-    const monthData = await startCrawl(forward_crawl.month, forward_crawl.year);
-    console.log(JSON.stringify({ monthData }))
+    }    
+
+    const forwardMonthData = await startCrawl(forward_crawl.month, forward_crawl.year);
+    console.log(JSON.stringify({ forward: forwardMonthData }))
 
     let nextMonth = forward_crawl.month === 12 ? 1 : forward_crawl.month + 1;
     let nextYear = forward_crawl.month === 12 ? forward_crawl.year + 1 : forward_crawl.year;
+
+    const backwardMonthData = await startCrawl(forward_crawl.month, forward_crawl.year);
+    console.log(JSON.stringify({ forward: backwardMonthData }))
+
+    let backMonth = backward_crawl.month === 1 ? 12 : backward_crawl.month - 1;
+    let backYear = backward_crawl.month === 1 ? backward_crawl.year - 1 : backward_crawl.year;
+
 
     const status = await db.getDb().db(process.env.DB_NAME).collection('crawl_options').updateOne({
       '_id': db.ObjectId(process.env.CRAWL_ID)
@@ -66,6 +80,8 @@ cron.schedule('*/2 * * * *', async () => {
         $set: {
           "forward_crawl.month": nextMonth,
           "forward_crawl.year": nextYear,
+          "backward_crawl.month": backMonth,
+          "backward_crawl.year": backYear,
         }
       })
     // db.disconnect();
@@ -137,5 +153,3 @@ const startCrawl = async (month, year) => {
     console.log(e)
   }
 }
-
-startCrawl(7, 2019).then(data => console.log()).catch(e => console.log(e))

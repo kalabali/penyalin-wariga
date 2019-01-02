@@ -128,9 +128,9 @@ const monthCrawl = async options => {
     }
 }
 
-monthCrawl({ month: 1, year: 2019 })
-    .then(data => console.log(
-        JSON.stringify(data)
-        )).catch(err => console.log(err))
+// monthCrawl({ month: 1, year: 2019 })
+//     .then(data => console.log(
+//         JSON.stringify(data)
+//         )).catch(err => console.log(err))
 
 module.exports = monthCrawl;
