@@ -114,7 +114,7 @@ const getLastDate = (month, year) => {
     else if(month === 2){
         return 28;
     }
-    else if((month > 7 && month % 2 == 0) || (month < 7 && month % 2 == 1)){
+    else if((month > 7 && month % 2 == 0) || (month < 7 && month % 2 == 1) || month === 7){
         return 31;
     }
     return 30;    
