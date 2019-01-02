@@ -44,6 +44,7 @@ cron.schedule('*/2 * * * *', () => {
 
 cron.schedule('*/2 * * * *', async () => {
   console.log(`running at ${Date()}`);  
+  return true;
   try {
     const { forward_crawl } = await db.getDb().db(process.env.DB_NAME).collection('crawl_options').findOne({
       '_id': db.ObjectId(process.env.CRAWL_ID)
