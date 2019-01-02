@@ -1,5 +1,6 @@
 const cron = require('node-cron');
 const express = require('express');
+const axios = require('axios');
 const db = require('./src/helpers/db');
 const monthCrawl = require('./src/modules/month-crawl');
 const dayCrawl = require('./src/modules/day-crawl');
@@ -30,6 +31,14 @@ db.connect(async (err) => {
     console.log('connected to database');
   }
 });
+
+cron.schedule('*/30 * * * *', () => {
+  axios.get("https://penyalin-wariga.herokuapp.com/")
+  .then(({ data }) => {
+    console.log(data);
+  })
+  .catch(e => console.log(e))
+})
 
 cron.schedule('*/2 * * * *', async () => {
   console.log(`running at ${Date()}`);  
